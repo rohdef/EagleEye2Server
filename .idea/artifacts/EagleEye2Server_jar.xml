@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="EagleEye2Server:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/EagleEye2Server_jar</output-path>
+    <root id="archive" name="EagleEye2Server.jar">
+      <element id="module-output" name="EagleEye2Server" />
+    </root>
+  </artifact>
+</component>
