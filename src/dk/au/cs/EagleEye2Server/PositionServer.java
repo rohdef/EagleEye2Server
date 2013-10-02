@@ -16,10 +16,10 @@ public class PositionServer {
       DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
       location = inFromClient.readLine();
 
+      System.out.println("Received: " + location);
       saveToFile(location, "locations");
 
       // For testing purposes, perhaps this configurable
-      System.out.println("Received: " + location);
       capitalizedSentence = location.toUpperCase() + '\n';
       outToClient.writeBytes(capitalizedSentence);
     }
