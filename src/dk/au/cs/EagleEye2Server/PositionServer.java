@@ -1,7 +1,7 @@
 package dk.au.cs.EagleEye2Server;
 
-import android.location.Location;
 import com.google.gson.Gson;
+import de.micromata.opengis.kml.v_2_2_0.Kml;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -13,6 +13,7 @@ public class PositionServer {
   public static void main(String[] args) throws IOException {
     if(0 < args.length && args[0].equals("parse")){
       parse(args[1]);
+      //toKML();
     }else{
       server();
     }
@@ -75,9 +76,11 @@ public class PositionServer {
       String line = br.readLine();
 
       while (line != null) {
-        System.out.println("Line: "+line);
+        //System.out.println("Line: "+line);
+
         location = gson.fromJson(line, Location.class);
         locations.add(location);
+
         line = br.readLine();
       }
     } finally {
@@ -86,8 +89,16 @@ public class PositionServer {
 
     System.out.println("Start middle");
 
-    for(Location locationn : locations){
-      //System.out.println("Location: "+locationn);
+    for(Location location_ : locations){
+      System.out.println("Location: "+location_);
     }
+  }
+
+  private static void toKML() throws IOException {
+    final Kml kml = new Kml();
+    kml.createAndSetPlacemark()
+            .withName("London, UK").withOpen(Boolean.TRUE)
+            .createAndSetPoint().addToCoordinates(-0.126236, 51.500152);
+    kml.marshal(new File("HelloKml.kml"));
   }
 }
