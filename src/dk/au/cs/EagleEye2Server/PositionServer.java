@@ -12,8 +12,8 @@ import java.util.List;
 public class PositionServer {
   public static void main(String[] args) throws IOException {
     if(0 < args.length && args[0].equals("parse")){
-      parse(args[1]);
-      //toKML();
+      //parse(args[1]);
+      toKML();
     }else{
       server();
     }
