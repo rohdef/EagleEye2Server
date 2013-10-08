@@ -7,7 +7,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ParseKML {
@@ -85,15 +87,33 @@ public class ParseKML {
 
     // Locations
     int no = 0;
+    long firstTime = 0;
+    long duration = 0;
+
 
     for(Location location : locations){
+      // Time - Duration
+      if(firstTime == 0){
+        firstTime = location.getmTime();
+      }
+
+      duration = location.getmTime() - firstTime;
+
+      // Time formatting
+      Date time = new Date(location.getmTime());
+      SimpleDateFormat format = new SimpleDateFormat ("dd-MM-yyyy HH:mm:ss");
+
+      Date durationTime = new Date(duration);
+      SimpleDateFormat durationFormat = new SimpleDateFormat ("mm:ss");
+
       // Path
       pathLine.addToCoordinates(location.getmLongitude(), location.getmLatitude());
 
       // Point
       Placemark pmPoint = doc.createAndAddPlacemark();
       pmPoint.setStyleUrl("EagleEye");
-      pmPoint.withName("Location "+no);
+      pmPoint.withName("L"+no+" - "+durationFormat.format(durationTime)+"");
+      pmPoint.withDescription("Time: "+format.format(time));
 
       Point point = pmPoint.createAndSetPoint();
       point.addToCoordinates(location.getmLongitude(), location.getmLatitude());
